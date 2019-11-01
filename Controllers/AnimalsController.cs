@@ -20,38 +20,46 @@ namespace AnimalShelterApi.Controllers
 
     // GET api/animals
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get(string name,string taxonomy, string breed, int age, string gender, string isfixed)
+    public ActionResult<IEnumerable<Animal>> Get(string name,string taxonomy, string breed, int age, string gender, string isfixed, int page)
     {
+        //the first page is actually page 0
+        if(page > 0)
+          page = page - 1;
+
         var query = _db.Animals.AsQueryable();
 
         if (name != null)
         {
-        query = query.Where(entry => entry.Name == name);
+        query = query.Where(entry => entry.Name == name).Skip(page * 5).Take(5);
         }
 
         if (taxonomy != null)
         {
-        query = query.Where(entry => entry.Taxonomy == taxonomy);
+        query = query.Where(entry => entry.Taxonomy == taxonomy).Skip(page * 5).Take(5);
         }
 
         if (breed != null)
         {
-        query = query.Where(entry => entry.Breed == breed);
+        query = query.Where(entry => entry.Breed == breed).Skip(page * 5).Take(5);
         }
 
         if (age > 0)
         {
-        query = query.Where(entry => entry.Age == age);
+        query = query.Where(entry => entry.Age == age).Skip(page * 5).Take(5);
         }
 
         if (gender != null)
         {
-        query = query.Where(entry => entry.Gender == gender);
+        query = query.Where(entry => entry.Gender == gender).Skip(page * 5).Take(5);
         }
 
         if (isfixed != null)
         {
-        query = query.Where(entry => entry.IsFixed == Boolean.Parse(isfixed));
+        query = query.Where(entry => entry.IsFixed == Boolean.Parse(isfixed)).Skip(page * 5).Take(5);
+        }
+        if(name == null && taxonomy == null && breed == null && age <= 0 && gender == null && isfixed == null)
+        {
+          query = query.Skip(page * 5).Take(5);
         }
 
         return query.ToList();
