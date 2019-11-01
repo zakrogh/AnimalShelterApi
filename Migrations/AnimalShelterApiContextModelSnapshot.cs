@@ -31,6 +31,8 @@ namespace AnimalShelterApi.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Taxonomy");
+
                     b.HasKey("AnimalId");
 
                     b.ToTable("Animals");
@@ -41,9 +43,30 @@ namespace AnimalShelterApi.Migrations
                             AnimalId = 1,
                             Age = 7,
                             Breed = "Golden Retriever",
-                            Gender = "Female",
+                            Gender = "Male",
                             IsFixed = true,
-                            Name = "Bob"
+                            Name = "Bob",
+                            Taxonomy = "Dog"
+                        },
+                        new
+                        {
+                            AnimalId = 2,
+                            Age = 2,
+                            Breed = "Labrador",
+                            Gender = "Male",
+                            IsFixed = false,
+                            Name = "Fred",
+                            Taxonomy = "Dog"
+                        },
+                        new
+                        {
+                            AnimalId = 3,
+                            Age = 2,
+                            Breed = "Tuxedo",
+                            Gender = "Female",
+                            IsFixed = false,
+                            Name = "Sally",
+                            Taxonomy = "Cat"
                         });
                 });
 #pragma warning restore 612, 618

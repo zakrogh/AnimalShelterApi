@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,18 @@ namespace AnimalShelterApi.Controllers
 
     // GET api/animals
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get(string name, string breed, int age, string gender, bool isfixed)
+    public ActionResult<IEnumerable<Animal>> Get(string name,string taxonomy, string breed, int age, string gender, string isfixed)
     {
         var query = _db.Animals.AsQueryable();
 
         if (name != null)
         {
         query = query.Where(entry => entry.Name == name);
+        }
+
+        if (taxonomy != null)
+        {
+        query = query.Where(entry => entry.Taxonomy == taxonomy);
         }
 
         if (breed != null)
@@ -43,9 +49,9 @@ namespace AnimalShelterApi.Controllers
         query = query.Where(entry => entry.Gender == gender);
         }
 
-        if (isfixed == true)
+        if (isfixed != null)
         {
-        query = query.Where(entry => entry.IsFixed == isfixed);
+        query = query.Where(entry => entry.IsFixed == Boolean.Parse(isfixed));
         }
 
         return query.ToList();
