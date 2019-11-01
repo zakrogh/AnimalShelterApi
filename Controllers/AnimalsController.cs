@@ -19,24 +19,34 @@ namespace AnimalShelterApi.Controllers
 
     // GET api/animals
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get(string species, string gender, string name)
+    public ActionResult<IEnumerable<Animal>> Get(string name, string breed, int age, string gender, bool isfixed)
     {
         var query = _db.Animals.AsQueryable();
-        //
-        // if (species != null)
-        // {
-        // query = query.Where(entry => entry.Species == species);
-        // }
-        //
-        // if (gender != null)
-        // {
-        // query = query.Where(entry => entry.Gender == gender);
-        // }
-        //
-        // if (name != null)
-        // {
-        // query = query.Where(entry => entry.Name == name);
-        // }
+
+        if (name != null)
+        {
+        query = query.Where(entry => entry.Name == name);
+        }
+
+        if (breed != null)
+        {
+        query = query.Where(entry => entry.Breed == breed);
+        }
+
+        if (age > 0)
+        {
+        query = query.Where(entry => entry.Age == age);
+        }
+
+        if (gender != null)
+        {
+        query = query.Where(entry => entry.Gender == gender);
+        }
+
+        if (isfixed == true)
+        {
+        query = query.Where(entry => entry.IsFixed == isfixed);
+        }
 
         return query.ToList();
     }

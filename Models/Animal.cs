@@ -7,6 +7,6 @@ namespace AnimalShelterApi.Models
         public string Breed { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
-        public bool Fixed { get; set; }
+        public bool IsFixed { get; set; }
     }
 }
